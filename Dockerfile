@@ -1,8 +1,8 @@
-FROM node:20.16.0-alpine AS base
+FROM node:22-bookworm AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-RUN npm i -g pnpm
+RUN npm i -g pnpm@8
 
 FROM base AS build
 COPY . /usr/src/app
