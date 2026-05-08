@@ -10,7 +10,7 @@ DEFAULT_URL = "http://localhost:4000"
 
 def get_authors() -> list:
     """获取所有公众号列表"""
-    url = f"{DEFAULT_URL}/feeds/authors"
+    url = f"{DEFAULT_URL}/authors"
     try:
         with urllib.request.urlopen(url, timeout=15) as response:
             data = json.loads(response.read().decode('utf-8'))
