@@ -34,11 +34,17 @@ python scripts/get_articles.py <mp_id> --limit 5 --update
 
 ### Step 4: 一站式获取（推荐）
 
-直接通过公众号名称获取文章：
+直接通过公众号名称获取文章列表：
 
 ```bash
-python scripts/fetch_articles.py "财联社" --limit 5 --text
+python scripts/fetch_articles.py "财联社" --limit 5
 ```
+
+### Step 5: 获取文章正文
+
+API 只返回文章标题/链接/封面图，**正文 content_html 为空**（数据库无此字段）。
+
+如需完整正文，请自行请求文章 URL（`items[].url`）用爬虫/浏览器工具抓取。
 
 ## API 接口
 
@@ -55,4 +61,3 @@ python scripts/fetch_articles.py "财联社" --limit 5 --text
 | -------------- | ---------------------------- |
 | 服务未运行     | 检查 Docker 容器状态         |
 | AUTH_CODE 错误 | 检查 docker-compose.yml 配置 |
-| 文章内容为空   | 使用`--update` 强制刷新      |
