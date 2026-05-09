@@ -42,11 +42,11 @@ def fetch_articles(query: str, limit: int = 10, update: bool = False):
 
     for i, article in enumerate(articles, 1):
         print(f"\n{'='*60}")
-        title = article.get('title', '无标题').encode('gbk', errors='replace').decode('gbk')
+        title = article.get('title', '无标题')
         print(f"[{i}] {title}")
         url = article.get('url', '无链接')
         print(f"链接: {url}")
-        date = article.get('date_modified', '无日期')
+        date = article.get('date', '无日期')
         print(f"日期: {date}")
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import sys
 import json
 import urllib.request
 import urllib.error
+from datetime import datetime, timedelta, timezone
 
 DEFAULT_URL = "http://localhost:4000"
 
@@ -18,14 +19,21 @@ def get_articles(mp_id: str, limit: int = 10, update: bool = False) -> list:
             data = json.loads(response.read().decode('utf-8'))
             # JSON Feed 格式：文章在 items 数组中
             items = data.get('items', [])
-            # 转换格式以保持兼容性
+            # 转换格式，UTC时间转北京时间
             articles = []
             for item in items:
+                date_utc = item.get('date_modified', '')
+                # UTC 时间转北京时间
+                if date_utc:
+                    dt = datetime.fromisoformat(date_utc.replace('Z', '+00:00'))
+                    beijing_tz = timezone(timedelta(hours=8))
+                    date_beijing = dt.astimezone(beijing_tz).strftime('%Y-%m-%d %H:%M:%S')
+                else:
+                    date_beijing = ''
                 articles.append({
                     'title': item.get('title', ''),
                     'url': item.get('url', ''),
-                    'date_modified': item.get('date_modified', item.get('date_published', '')),
-                    'content': item.get('content_html', item.get('content_text', '')),
+                    'date': date_beijing,
                     'image': item.get('image', '')
                 })
             return articles
